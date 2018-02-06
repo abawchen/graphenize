@@ -1,6 +1,8 @@
 from .registry import get_global_registry
+from .utils import to_singular
 
 registry = get_global_registry()
+
 
 class Model(object):
 
@@ -25,7 +27,7 @@ class Model(object):
             items = field_schema.get('items')
             items_type = items.get('type')
             if items_type == 'object':
-                self.fields[field_name] = [Model(field_name, items)]
+                self.fields[field_name] = [Model(to_singular(field_name), items)]
             else:
                 self.fields[field_name] = [items_type]
         else:

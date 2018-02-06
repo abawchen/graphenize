@@ -4,7 +4,7 @@ from graphene import ObjectType
 from textblob import Word
 
 def to_camel_case(name):
-    return ''.join(x.capitalize() or '_' for x in name.split('_'))
+    return str(''.join(x.capitalize() or '_' for x in name.split('_')))
 
 
 def to_underscore(name):

@@ -20,9 +20,6 @@ def test_to_camel_case():
     assert to_camel_case('camel_case') == 'CamelCase'
 
 
-def test_convert_type_integer():
-    pass
-
 def test_merge_two_dicts():
     x = {'x': 'x'}
     y = {'y': 1}

@@ -51,10 +51,32 @@ def test_builder_array_root(json_loader):
     builder.add_object(obj)
     klasses = builder.to_graphene_klasses()
 
-    print(klasses)
     CompanyType = klasses.get('Company')
-    print(CompanyType.__dict__)
     assert isinstance(CompanyType.name, String)
     assert isinstance(CompanyType.catch_phrase, String)
     assert isinstance(CompanyType.bs, String)
+
+    GeoType = klasses.get('Geo')
+    assert isinstance(GeoType.lat, String)
+    assert isinstance(GeoType.lng, String)
+
+    AddressType = klasses.get('Address')
+    assert isinstance(AddressType.street, String)
+    assert isinstance(AddressType.suite, String)
+    assert isinstance(AddressType.city, String)
+    assert isinstance(AddressType.city, String)
+    assert isinstance(AddressType.zipcode, String)
+    assert isinstance(AddressType.geo, Field)
+    assert AddressType.geo._type == GeoType
+
+    UserType = klasses.get('User')
+    assert isinstance(UserType.id, Int)
+    assert isinstance(UserType.username, String)
+    assert isinstance(UserType.email, String)
+    assert isinstance(UserType.phone, String)
+    assert isinstance(UserType.website, String)
+    assert isinstance(UserType.address, Field)
+    assert UserType.address._type == AddressType
+    assert isinstance(UserType.company, Field)
+    assert UserType.company._type == CompanyType
 

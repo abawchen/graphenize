@@ -5,7 +5,7 @@ from graphene import Field
 
 from .converter import convert
 from .model import Model
-from .utils import to_singular_camel_case, ClassFactory
+from .utils import to_camel_case, to_underscore, ClassFactory
 from .registry import get_global_registry
 
 registry = get_global_registry()
@@ -31,10 +31,9 @@ class Builder(SchemaBuilder):
         # TODO: Refactor
         klasses = {}
         for model in registry.models:
-            classname = to_singular_camel_case(model.name)
-
+            classname = to_camel_case(model.name)
             fields = dict(
-                (kv[0], convert(kv[1], registry)) for kv in model.fields.items()
+                (to_underscore(kv[0]), convert(kv[1], registry)) for kv in model.fields.items()
             )
             Class = ClassFactory(classname, fields)
             registry.register(model, Class)
