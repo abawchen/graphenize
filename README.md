@@ -1,1 +1,1 @@
-# graphql-from-json
+# graphene-from-json

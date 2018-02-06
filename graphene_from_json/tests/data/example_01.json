@@ -1,0 +1,21 @@
+{
+    "name": "brandon",
+    "id": 1,
+    "favorite_color": "teal",
+    "job": {
+        "type": "web developer",
+        "years": 1
+    },
+    "dogs": ["minnie", "navi"],
+    "cats": [
+        {
+            "name": "cat1",
+            "age": 10
+        },
+        {
+            "name": "cat2",
+            "age": 20
+        }
+    ]
+}
+
