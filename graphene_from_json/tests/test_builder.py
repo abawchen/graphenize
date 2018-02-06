@@ -23,7 +23,7 @@ def test_builder_complex_object(json_loader):
     obj = json_loader('data/example_01.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
-    klasses = builder.to_graphql_schema()
+    klasses = builder.to_graphene_klasses()
 
     JobType = klasses.get('Job')
     assert isinstance(JobType.type, String)
@@ -49,8 +49,12 @@ def test_builder_array_root(json_loader):
     obj = json_loader('data/example_02.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
-    schema = builder.to_graphql_schema()
-    # pprint(schema)
-    print(json.dumps(schema))
-    assert True
+    klasses = builder.to_graphene_klasses()
+
+    print(klasses)
+    CompanyType = klasses.get('Company')
+    print(CompanyType.__dict__)
+    assert isinstance(CompanyType.name, String)
+    assert isinstance(CompanyType.catch_phrase, String)
+    assert isinstance(CompanyType.bs, String)
 

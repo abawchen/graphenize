@@ -20,7 +20,7 @@ class Builder(SchemaBuilder):
         self.root_model_name = root_model_name
         self.registry = registry
 
-    def to_graphql_schema(self):
+    def to_graphene_klasses(self):
         json_schema = super(Builder, self).to_schema()
         root_type = json_schema.get('type')
         if root_type == 'array':
@@ -41,4 +41,7 @@ class Builder(SchemaBuilder):
             klasses[classname] = Class
 
         return klasses
+
+    def serialize(self):
+        pass
 

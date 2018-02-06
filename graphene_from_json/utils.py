@@ -3,15 +3,17 @@ import re
 from graphene import ObjectType
 from textblob import Word
 
-def to_singular_camel_case(word):
-    word = Word(''.join(x.capitalize() or '_' for x in word.split('_')))
-    return str(word.singularize())
+def to_camel_case(name):
+    return ''.join(x.capitalize() or '_' for x in name.split('_'))
 
 
-def to_singular_underscore(name):
+def to_underscore(name):
     s = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    word = Word(re.sub('([a-z0-9])([A-Z])', r'\1_\2', s).lower())
-    return str(word.singularize())
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s).lower()
+
+
+def to_singular(word):
+    return str(Word(word).singularize())
 
 
 def merge_two_dicts(x, y):

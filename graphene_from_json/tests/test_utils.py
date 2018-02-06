@@ -1,27 +1,23 @@
 from graphene import ID, String
 
-from ..utils import (ClassFactory, to_singular_camel_case,
-                     to_singular_underscore, merge_two_dicts)
+from ..utils import (ClassFactory, merge_two_dicts,
+                     to_camel_case, to_underscore, to_singular)
 
 
-def test_convert_name_camel_case():
-    assert to_singular_underscore('CamelCase') == 'camel_case'
+def test_to_underscore():
+    assert to_underscore('CamelCase') == 'camel_case'
 
 
-def test_to_singular_underscore_plural():
-    assert to_singular_underscore('dogs') == 'dog'
+def test_to_singular_dogs():
+    assert to_singular('dogs') == 'dog'
 
 
-def test_to_singular_underscore_camel_case_plural():
-    assert to_singular_underscore('allDogs') == 'all_dog'
+def test_to_singular_all_dogs():
+    assert to_singular('all_dogs') == 'all_dog'
 
 
-def test_to_singular_camel_case():
-    assert to_singular_camel_case('camel_case') == 'CamelCase'
-
-
-def test_to_singular_camel_case_plural():
-    assert to_singular_camel_case('all_dogs') == 'AllDog'
+def test_to_camel_case():
+    assert to_camel_case('camel_case') == 'CamelCase'
 
 
 def test_convert_type_integer():
