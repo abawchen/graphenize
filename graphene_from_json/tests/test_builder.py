@@ -3,7 +3,7 @@ import os
 import json
 import pytest
 
-from pprint import pprint
+from graphene import Field, Int, List, String
 
 from ..builder import Builder
 
@@ -19,22 +19,38 @@ def json_loader():
 
     return _loader
 
-def test_builder_01(json_loader):
+def test_builder_complex_object(json_loader):
     obj = json_loader('data/example_01.json')
-    # pprint(json)
+    builder = Builder(root_model_name='user')
+    builder.add_object(obj)
+    klasses = builder.to_graphql_schema()
+
+    JobType = klasses.get('Job')
+    assert isinstance(JobType.type, String)
+    assert isinstance(JobType.years, Int)
+
+    CatType = klasses.get('Cat')
+    assert isinstance(CatType.name, String)
+    assert isinstance(CatType.age, Int)
+
+    UserType = klasses.get('User')
+    assert isinstance(UserType.id, Int)
+    assert isinstance(UserType.name, String)
+    assert isinstance(UserType.favorite_color, String)
+    assert isinstance(UserType.job, Field)
+    assert UserType.job._type == JobType
+    assert isinstance(UserType.dogs, List)
+    assert UserType.dogs._of_type == String
+    assert isinstance(UserType.cats, List)
+    assert UserType.cats._of_type == CatType
+
+
+def test_builder_array_root(json_loader):
+    obj = json_loader('data/example_02.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
     schema = builder.to_graphql_schema()
-    # print(json.dumps(schema))
-    assert True
-
-def test_builder_02(json_loader):
-    # obj = json_loader('data/example_02.json')
-    # pprint(json)
-    # builder = Builder(root_model_name='user')
-    # builder.add_object(obj)
-    # schema = builder.to_graphql_schema()
     # pprint(schema)
-    # print(json.dumps(schema))
+    print(json.dumps(schema))
     assert True
 

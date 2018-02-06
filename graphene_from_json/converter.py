@@ -1,40 +1,26 @@
-import re
+from graphene import Field, Int, List, String
 
-from graphene import (ID, Boolean, Dynamic, Enum, Field, Float, Int, List,
-                      NonNull, ObjectType, String, UUID, is_node)
-from textblob import Word
+from .model import Model
 
-
-mapper = {
-    'integer': Int(),
-    'string': String()
+native_type = {
+    'integer': Int,
+    'string': String
 }
 
+def convert(field_type, registry):
+    # TODO: Refactor
+    if isinstance(field_type, list):
+        if field_type[0] in native_type:
+            return List(type(convert(field_type[0], registry)))
 
-def convert(name):
-    s = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    word = Word(re.sub('([a-z0-9])([A-Z])', r'\1_\2', s).lower())
-    return word.singularize()
+        if isinstance(field_type[0], Model):
+            return List(registry.get_type(field_type[0]))
 
+    if field_type in native_type:
+        return native_type.get(field_type)()
 
-def merge_two_dicts(x, y):
-    z = x.copy()
-    z.update(y)
-    return z
+    if isinstance(field_type, Model):
+        return Field(registry.get_type(field_type))
 
-
-def ClassFactory(name, fields, BaseClass=ObjectType):
-    """
-    https://stackoverflow.com/a/15247892/9041712
-    """
-
-    def __init__(self, **kwargs):
-        for key, value in kwargs.items():
-            if key not in argnames:
-                raise TypeError("Argument %s not valid for %s"
-                    % (key, self.__class__.__name__))
-            setattr(self, key, value)
-        BaseClass.__init__(self, name[:-len("Class")])
-    newclass = type(name, (BaseClass,), merge_two_dicts({"__init__": __init__}, fields))
-    return newclass
+    return registry.get_type(field_type)
 
