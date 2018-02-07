@@ -28,7 +28,7 @@ class Builder(SchemaBuilder):
         # TODO: Refactor
         models = {}
         for model in registry.models:
-            model.klassilize()
+            model.graphenize()
             models[model.klass._meta.name] = model
 
         return models

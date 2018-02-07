@@ -25,11 +25,14 @@ def test_builder_complex_object(json_loader):
     builder.add_object(obj)
     models = builder.to_models()
 
-    JobType = models.get('Job').klass
+    job = models.get('Job')
+    JobType = job.klass
     assert isinstance(JobType.type, String)
     assert isinstance(JobType.years, Int)
+    job.persist()
 
-    CatType = models.get('Cat').klass
+    cat = models.get('Cat')
+    CatType = cat.klass
     assert isinstance(CatType.name, String)
     assert isinstance(CatType.age, Int)
 
@@ -55,8 +58,6 @@ def test_builder_array_root(json_loader):
     assert isinstance(CompanyType.name, String)
     assert isinstance(CompanyType.catch_phrase, String)
     assert isinstance(CompanyType.bs, String)
-    print(CompanyType.__dict__)
-    print(type(CompanyType.name))
 
     GeoType = models.get('Geo').klass
     assert isinstance(GeoType.lat, String)

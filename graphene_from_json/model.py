@@ -59,7 +59,7 @@ class Model(object):
         else:
             self.fields[field_name] = field_type
 
-    def klassilize(self):
+    def graphenize(self):
         klassname = to_camel_case(self.name)
         fields = dict(
             (to_snake_case(kv[0]), convert(kv[1], registry)) for kv in self.fields.items()
@@ -68,8 +68,12 @@ class Model(object):
         registry.register(self, self.klass)
 
     def persist(self):
-        #print(self.klass.__dict__)
-        print(self.name)
-        print(type(self.name))
-        print(self.fields['name'])
+        declaration = 'class {}(graphene.ObjectType):\n\n'.format(self.klass._meta.name)
+        for name in self.fields.keys():
+            declaration += self.persist_attribute(name, getattr(self.klass, name))
+        print(declaration)
+
+    def persist_attribute(self, name, graphene_type):
+        declaration = '\t{} = graphene.{}()\n'.format(name, type(graphene_type))
+        return declaration
 
