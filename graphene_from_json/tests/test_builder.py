@@ -23,17 +23,17 @@ def test_builder_complex_object(json_loader):
     obj = json_loader('example_01.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
-    klasses = builder.to_graphene_klasses()
+    models = builder.to_models()
 
-    JobType = klasses.get('Job')
+    JobType = models.get('Job').klass
     assert isinstance(JobType.type, String)
     assert isinstance(JobType.years, Int)
 
-    CatType = klasses.get('Cat')
+    CatType = models.get('Cat').klass
     assert isinstance(CatType.name, String)
     assert isinstance(CatType.age, Int)
 
-    UserType = klasses.get('User')
+    UserType = models.get('User').klass
     assert isinstance(UserType.id, Int)
     assert isinstance(UserType.name, String)
     assert isinstance(UserType.favorite_color, String)
@@ -49,18 +49,20 @@ def test_builder_array_root(json_loader):
     obj = json_loader('example_02.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
-    klasses = builder.to_graphene_klasses()
+    models = builder.to_models()
 
-    CompanyType = klasses.get('Company')
+    CompanyType = models.get('Company').klass
     assert isinstance(CompanyType.name, String)
     assert isinstance(CompanyType.catch_phrase, String)
     assert isinstance(CompanyType.bs, String)
+    print(CompanyType.__dict__)
+    print(type(CompanyType.name))
 
-    GeoType = klasses.get('Geo')
+    GeoType = models.get('Geo').klass
     assert isinstance(GeoType.lat, String)
     assert isinstance(GeoType.lng, String)
 
-    AddressType = klasses.get('Address')
+    AddressType = models.get('Address').klass
     assert isinstance(AddressType.street, String)
     assert isinstance(AddressType.suite, String)
     assert isinstance(AddressType.city, String)
@@ -69,7 +71,7 @@ def test_builder_array_root(json_loader):
     assert isinstance(AddressType.geo, Field)
     assert AddressType.geo._type == GeoType
 
-    UserType = klasses.get('User')
+    UserType = models.get('User').klass
     assert isinstance(UserType.id, Int)
     assert isinstance(UserType.username, String)
     assert isinstance(UserType.email, String)

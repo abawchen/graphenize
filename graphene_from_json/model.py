@@ -68,4 +68,8 @@ class Model(object):
         registry.register(self, self.klass)
 
     def persist(self):
-        pass
+        #print(self.klass.__dict__)
+        print(self.name)
+        print(type(self.name))
+        print(self.fields['name'])
+
