@@ -12,7 +12,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 @pytest.fixture
 def json_loader():
     def _loader(filename):
-        filename = os.path.join(dir_path, filename)
+        filename = os.path.join(dir_path, 'fixtures', filename)
         with open(filename, 'r') as f:
             data = json.load(f)
         return data
@@ -20,7 +20,7 @@ def json_loader():
     return _loader
 
 def test_builder_complex_object(json_loader):
-    obj = json_loader('data/example_01.json')
+    obj = json_loader('example_01.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
     klasses = builder.to_graphene_klasses()
@@ -46,7 +46,7 @@ def test_builder_complex_object(json_loader):
 
 
 def test_builder_array_root(json_loader):
-    obj = json_loader('data/example_02.json')
+    obj = json_loader('example_02.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
     klasses = builder.to_graphene_klasses()
