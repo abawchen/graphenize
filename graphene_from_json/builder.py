@@ -2,10 +2,11 @@ import json
 
 from genson import SchemaBuilder
 from graphene import Field
+from graphene.utils.str_converters import to_snake_case
 
 from .converter import convert
 from .model import Model
-from .utils import to_camel_case, to_underscore, ClassFactory
+from .utils import ClassFactory, to_camel_case
 from .registry import get_global_registry
 
 registry = get_global_registry()
@@ -33,7 +34,7 @@ class Builder(SchemaBuilder):
         for model in registry.models:
             classname = to_camel_case(model.name)
             fields = dict(
-                (to_underscore(kv[0]), convert(kv[1], registry)) for kv in model.fields.items()
+                (to_snake_case(kv[0]), convert(kv[1], registry)) for kv in model.fields.items()
             )
             Class = ClassFactory(classname, fields)
             registry.register(model, Class)
