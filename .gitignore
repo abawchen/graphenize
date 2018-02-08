@@ -4,5 +4,6 @@
 .cache/
 .eggs/
 .pytest_cache/
+dist/
 graphenize.egg-info/
 
