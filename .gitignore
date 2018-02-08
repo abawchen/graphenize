@@ -1,5 +1,8 @@
 *.pyc
 *.swp
+.coverage
 .cache/
+.eggs/
 .pytest_cache/
+graphenize.egg-info/
 

@@ -1,4 +1,4 @@
-from graphene import Field, Int, List, String
+from graphene import Field, Int, List, ObjectType, String
 from graphene.utils.str_converters import to_snake_case
 
 from .registry import get_global_registry
@@ -85,9 +85,11 @@ class Model(object):
         if isinstance(graphene_type, Field):
             declaration += 'Field({})\n'.format(graphene_type._type)
         elif isinstance(graphene_type, List):
-            declaration += 'List({})\n'.format(graphene_type._of_type)
+            if issubclass(graphene_type._of_type, ObjectType):
+                declaration += 'List({})\n'.format(graphene_type._of_type)
+            else:
+                declaration += 'List(graphene.{})\n'.format(graphene_type._of_type)
         else:
             declaration += '{}()\n'.format(type(graphene_type))
 
         return declaration
-

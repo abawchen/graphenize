@@ -1,5 +1,3 @@
-import json
-
 from genson import SchemaBuilder
 
 from .model import Model
@@ -17,7 +15,7 @@ class Builder(SchemaBuilder):
         super(Builder, self).__init__(schema_uri)
         self.root_model_name = root_model_name
 
-    def to_models(self):
+    def to_models(self, filename=None):
         json_schema = super(Builder, self).to_schema()
         root_type = json_schema.get('type')
         if root_type == 'array':
@@ -30,5 +28,11 @@ class Builder(SchemaBuilder):
         for model in registry.models:
             model.graphenize()
             models[model.klass._meta.name] = model
+
+        if filename is not None:
+            declaration = 'import graphene{}'.format('\n' * 3)
+            declaration += '\n\n'.join(map(lambda m: m.persist(), registry.models))
+            with open(filename, 'w') as f:
+                f.write(declaration)
 
         return models

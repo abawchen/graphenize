@@ -1,5 +1,3 @@
-from graphene import Int, String, List
-
 class Registry(object):
 
     def __init__(self):
@@ -11,6 +9,7 @@ class Registry(object):
 
     def get_type(self, field_type):
         return self._registry.get(field_type)
+
 
 registry = None
 
@@ -25,4 +24,3 @@ def get_global_registry():
 def reset_global_registry():
     global registry
     registry = None
-
