@@ -113,4 +113,3 @@ def test_builder_to_model_array_root(json_loader):
     assert UserType.address._type == AddressType
     assert isinstance(UserType.company, Field)
     assert UserType.company._type == CompanyType
-
