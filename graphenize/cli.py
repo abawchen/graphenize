@@ -1,8 +1,8 @@
 import click
 import json
-import os
 
 from .builder import Builder
+
 
 @click.command()
 @click.option('--input', required=True, help='input path of json data')
@@ -18,6 +18,6 @@ def cli(input, output, root):
     builder.add_object(obj)
     builder.to_models(output)
 
+
 if __name__ == '__main__':
     cli()
-

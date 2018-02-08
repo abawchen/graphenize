@@ -1,12 +1,12 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='graphene-from-json',
+    name='graphenize',
     version='0.1.0',
 
     description='Auto-generation Graphene models from json.',
 
-    url='https://github.com/abawchen/graphene-from-json',
+    url='https://github.com/abawchen/graphenize',
 
     author='Abaw Chen',
     author_email='abaw.chen@gmail.com',
@@ -25,7 +25,7 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
 
-    keywords='graphql json rest api graphene schema',
+    keywords='graphql json rest api graphene schema graphenize',
 
     packages=find_packages(exclude=['tests']),
 
@@ -37,7 +37,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        graphene-from-json=graphene_from_json.cli:cli
+        graphenize=graphenize.cli:cli
     ''',
     python_requires='>=2.7',
     zip_safe=True,

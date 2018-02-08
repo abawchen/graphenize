@@ -93,4 +93,3 @@ class Model(object):
             declaration += '{}()\n'.format(type(graphene_type))
 
         return declaration
-

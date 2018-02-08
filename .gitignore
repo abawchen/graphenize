@@ -1,7 +1,8 @@
 *.pyc
 *.swp
+.coverage
 .cache/
 .eggs/
 .pytest_cache/
-graphene_from_json.egg-info/
+graphenize.egg-info/
 

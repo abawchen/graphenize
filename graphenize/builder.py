@@ -1,5 +1,3 @@
-import json
-
 from genson import SchemaBuilder
 
 from .model import Model
