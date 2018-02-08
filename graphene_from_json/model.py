@@ -67,13 +67,27 @@ class Model(object):
         self.klass = ClassFactory(klassname, fields)
         registry.register(self, self.klass)
 
-    def persist(self):
+    def persist(self, filename=None):
         declaration = 'class {}(graphene.ObjectType):\n\n'.format(self.klass._meta.name)
-        for name in self.fields.keys():
+
+        for name in sorted(self.fields.keys()):
             declaration += self.persist_attribute(name, getattr(self.klass, name))
-        print(declaration)
+
+        if filename is not None:
+            with open(filename, 'w') as f:
+                f.write(declaration)
+
+        return declaration
 
     def persist_attribute(self, name, graphene_type):
-        declaration = '\t{} = graphene.{}()\n'.format(name, type(graphene_type))
+        declaration = '{}{} = graphene.'.format(' ' * 4,  name)
+
+        if isinstance(graphene_type, Field):
+            declaration += 'Field({})\n'.format(graphene_type._type)
+        elif isinstance(graphene_type, List):
+            declaration += 'List({})\n'.format(graphene_type._of_type)
+        else:
+            declaration += '{}()\n'.format(type(graphene_type))
+
         return declaration
 

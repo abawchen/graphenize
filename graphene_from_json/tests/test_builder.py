@@ -11,6 +11,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 @pytest.fixture
 def json_loader():
+
     def _loader(filename):
         filename = os.path.join(dir_path, 'fixtures', filename)
         with open(filename, 'r') as f:
@@ -19,7 +20,21 @@ def json_loader():
 
     return _loader
 
-def test_builder_complex_object(json_loader):
+@pytest.fixture
+def file_loader():
+
+    def _loader(folder, filename):
+        filename = os.path.join(dir_path, folder, filename)
+        with open(filename, 'r') as f:
+            return f.read()
+
+    return _loader
+
+
+def get_build_filepath(filename):
+    return os.path.join(dir_path, 'build', filename)
+
+def test_builder_complex_object(json_loader, file_loader):
     obj = json_loader('example_01.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
@@ -29,14 +44,24 @@ def test_builder_complex_object(json_loader):
     JobType = job.klass
     assert isinstance(JobType.type, String)
     assert isinstance(JobType.years, Int)
-    job.persist()
+
+    job.persist(get_build_filepath('job.py'))
+    expected_py = file_loader('fixtures', 'job.py')
+    built_py = file_loader('build', 'job.py')
+    assert built_py == expected_py
 
     cat = models.get('Cat')
     CatType = cat.klass
     assert isinstance(CatType.name, String)
     assert isinstance(CatType.age, Int)
 
-    UserType = models.get('User').klass
+    cat.persist(get_build_filepath('cat.py'))
+    expected_py = file_loader('fixtures', 'cat.py')
+    built_py = file_loader('build', 'cat.py')
+    assert built_py == expected_py
+
+    user = models.get('User')
+    UserType = user.klass
     assert isinstance(UserType.id, Int)
     assert isinstance(UserType.name, String)
     assert isinstance(UserType.favorite_color, String)
@@ -46,6 +71,11 @@ def test_builder_complex_object(json_loader):
     assert UserType.dogs._of_type == String
     assert isinstance(UserType.cats, List)
     assert UserType.cats._of_type == CatType
+
+    user.persist(get_build_filepath('user.py'))
+    expected_py = file_loader('fixtures', 'user.py')
+    built_py = file_loader('build', 'user.py')
+    assert built_py == expected_py
 
 
 def test_builder_array_root(json_loader):
