@@ -1,5 +1,7 @@
 *.pyc
 *.swp
 .cache/
+.eggs/
 .pytest_cache/
+graphene_from_json.egg-info/
 
