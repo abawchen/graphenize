@@ -34,7 +34,8 @@ def file_loader():
 def get_build_filepath(filename):
     return os.path.join(dir_path, 'build', filename)
 
-def test_builder_complex_object(json_loader, file_loader):
+
+def test_builder_to_model_complex_object(json_loader, file_loader):
     obj = json_loader('example_01.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
@@ -78,7 +79,7 @@ def test_builder_complex_object(json_loader, file_loader):
     assert built_py == expected_py
 
 
-def test_builder_array_root(json_loader):
+def test_builder_to_model_array_root(json_loader):
     obj = json_loader('example_02.json')
     builder = Builder(root_model_name='user')
     builder.add_object(obj)
