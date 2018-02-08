@@ -2,5 +2,6 @@ click==6.7
 flake8==3.5.0
 genson==1.0.0
 graphene==2.0.1
+pytest==3.3.2
+pytest-cov==2.5.1
 textblob==0.15.1
-
