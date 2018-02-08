@@ -1,11 +1,7 @@
 from graphene import ID, String
 
 from ..utils import (ClassFactory, merge_two_dicts,
-                     to_camel_case, to_underscore, to_singular)
-
-
-def test_to_underscore():
-    assert to_underscore('CamelCase') == 'camel_case'
+                     to_camel_case, to_singular)
 
 
 def test_to_singular_dogs():

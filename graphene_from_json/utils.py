@@ -7,11 +7,6 @@ def to_camel_case(name):
     return str(''.join(x.capitalize() or '_' for x in name.split('_')))
 
 
-def to_underscore(name):
-    s = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s).lower()
-
-
 def to_singular(word):
     return str(Word(word).singularize())
 
