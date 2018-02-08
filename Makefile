@@ -6,6 +6,7 @@ clean:
 	@rm -rf .cache 2> /dev/null
 	@rm -rf .eggs 2> /dev/null
 	@rm -rf .pytest_cache 2> /dev/null
+	@rm -rf dist 2> /dev/null
 	@rm -rf graphenize.egg-info 2> /dev/null
 
 lint:

@@ -71,6 +71,7 @@ class Model(object):
         declaration = 'class {}(graphene.ObjectType):\n\n'.format(self.klass._meta.name)
 
         for name in sorted(self.fields.keys()):
+            name = to_snake_case(name)
             declaration += self.persist_attribute(name, getattr(self.klass, name))
 
         if filename is not None:

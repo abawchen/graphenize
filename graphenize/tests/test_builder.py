@@ -103,7 +103,8 @@ def test_builder_to_model_array_root(json_loader):
     assert isinstance(AddressType.geo, Field)
     assert AddressType.geo._type == GeoType
 
-    UserType = models.get('User').klass
+    user = models.get('User')
+    UserType = user.klass
     assert isinstance(UserType.id, Int)
     assert isinstance(UserType.username, String)
     assert isinstance(UserType.email, String)
@@ -113,3 +114,5 @@ def test_builder_to_model_array_root(json_loader):
     assert UserType.address._type == AddressType
     assert isinstance(UserType.company, Field)
     assert UserType.company._type == CompanyType
+    # TODO:
+    user.persist()
