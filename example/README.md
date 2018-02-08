@@ -11,7 +11,7 @@ whole Graphene repository:
 ```bash
 # Get the example project code
 git clone git@github.com:abawchen/graphenize.git
-cd graphene-mongo/example
+cd example
 ```
 
 It is good idea (but not required) to create a virtual environment
