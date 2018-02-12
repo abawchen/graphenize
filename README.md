@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/abawchen/graphenize.svg?branch=master)](https://travis-ci.org/abawchen/graphenize)
+[![Build Status](https://travis-ci.org/abawchen/graphenize.svg?branch=master)](https://travis-ci.org/abawchen/graphenize) [![Coverage Status](https://coveralls.io/repos/github/abawchen/graphenize/badge.svg?branch=master)](https://coveralls.io/github/abawchen/graphenize?branch=master)
 
 # Graphenize
 
-A command line tool to auto-generate Graphene model(s) from json data.
+A command line tool to auto-generate Graphene model from json data.
 
 ## Installation
 
