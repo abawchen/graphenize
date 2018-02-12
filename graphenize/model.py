@@ -38,7 +38,7 @@ class Model(object):
 
         root_type = json_schema.get('type')
         if root_type == 'object':
-            map(self._add_field, json_schema.get('properties').items())
+            list(map(self._add_field, json_schema.get('properties').items()))
         # elif root_type == 'array':
         #    pass
         registry.models.append(self)
